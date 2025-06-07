@@ -24,23 +24,6 @@ models:
       belongsTo: Category:parent
       belongsToMany: Product
 
-  Product:
-    name: string
-    slug: string unique
-    brand_id: id foreign:brands.id nullable
-    sku: string unique
-    description: longtext nullable
-    price: decimal(10,2) default:0.00
-    quantity: unsignedInteger default:0
-    image: string nullable
-    type: enum('deliverable', 'downloadable') default:'deliverable'
-    is_active: boolean default:true
-    is_visible: boolean default:false
-    is_featured: boolean default:false
-    published_at: datetime nullable
-    relationships:
-      belongsTo: Brand
-      belongsToMany: Category
 
   Customer:
     name: string
@@ -59,9 +42,29 @@ models:
       hasMany: Order
 
 
+  Product:
+    name: string
+    slug: string unique
+    brand_id: id foreign:brands.id nullable
+    sku: string unique
+    description: longtext nullable
+    price: decimal(10,2) default:0.00
+    quantity: unsignedInteger default:0
+    image: string nullable
+    type: enum('deliverable', 'downloadable') default:'deliverable'
+    is_active: boolean default:true
+    is_visible: boolean default:false
+    is_featured: boolean default:false
+    published_at: datetime nullable
+    relationships:
+      belongsTo: Brand
+      belongsToMany: Category, OrderItem
+
+
+
   Order:
     order_number: string unique
-    customer_id: id foreign:customers.id nullable
+    customer_id: id foreign:customers.id cascade
     total_amount: decimal(10,2) default:0.00
     status: enum('pending', 'processing', 'completed', 'cancelled') default:'pending'
     payment_status: enum('unpaid', 'paid', 'refunded') default:'unpaid'

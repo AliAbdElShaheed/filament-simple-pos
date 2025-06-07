@@ -1,2 +1,29 @@
+created:
+    - database/factories/BrandFactory.php
+    - database/factories/CategoryFactory.php
+    - database/factories/CustomerFactory.php
+    - database/factories/ProductFactory.php
+    - database/factories/OrderFactory.php
+    - database/factories/OrderItemFactory.php
+    - database/migrations/2025_06_07_084710_create_brands_table.php
+    - database/migrations/2025_06_07_084711_create_categories_table.php
+    - database/migrations/2025_06_07_084712_create_customers_table.php
+    - database/migrations/2025_06_07_084713_create_products_table.php
+    - database/migrations/2025_06_07_084714_create_orders_table.php
+    - database/migrations/2025_06_07_084715_create_order_items_table.php
+    - database/migrations/2025_06_07_084716_create_category_product_table.php
+    - database/migrations/2025_06_07_084717_create_order_item_product_table.php
+    - app/Models/Brand.php
+    - app/Models/Category.php
+    - app/Models/Customer.php
+    - app/Models/Product.php
+    - app/Models/Order.php
+    - app/Models/OrderItem.php
 models:
     User: { name: string, email: string, email_verified_at: 'timestamp nullable', password: string, remember_token: 'string:100 nullable' }
+    Brand: { name: string, slug: 'string unique', url: 'string nullable', description: 'longtext nullable', logo: 'string nullable', primary_hex_color: 'string nullable', is_active: 'boolean default:true', is_visible: 'boolean default:false', notes: 'longtext nullable', relationships: { hasMany: Product } }
+    Category: { name: string, slug: 'string unique', parent_id: 'id foreign:categories.id nullable', description: 'longtext nullable', is_active: 'boolean default:true', is_visible: 'boolean default:false', relationships: { hasMany: 'Category:child', belongsTo: 'Category:parent', belongsToMany: Product } }
+    Customer: { name: string, email: 'string unique', phone: string, phone2: 'string nullable', address: string, address2: 'string nullable', date_of_birth: 'date nullable', country: 'string nullable', state: 'string nullable', city: 'string nullable', postal_code: 'string nullable', additional_info: 'longtext nullable', relationships: { hasMany: Order } }
+    Product: { name: string, slug: 'string unique', brand_id: 'id foreign:brands.id nullable', sku: 'string unique', description: 'longtext nullable', price: 'decimal(10,2) default:0.00', quantity: 'unsignedInteger default:0', image: 'string nullable', type: "enum('deliverable', 'downloadable') default:'deliverable'", is_active: 'boolean default:true', is_visible: 'boolean default:false', is_featured: 'boolean default:false', published_at: 'datetime nullable', relationships: { belongsTo: Brand, belongsToMany: 'Category, OrderItem' } }
+    Order: { order_number: 'string unique', customer_id: 'id foreign:customers.id cascade', total_amount: 'decimal(10,2) default:0.00', status: "enum('pending', 'processing', 'completed', 'cancelled') default:'pending'", payment_status: "enum('unpaid', 'paid', 'refunded') default:'unpaid'", shipping_price: 'decimal(10,2) default:0.00', shipping_address: 'string nullable', billing_address: 'string nullable', placed_at: 'datetime nullable', delivered_at: 'datetime nullable', cancelled_at: 'datetime nullable', notes: 'longtext nullable', softdeletes: softDeletes, relationships: { belongsTo: Customer, hasMany: OrderItem } }
+    OrderItem: { order_id: 'id foreign:orders.id', product_id: 'id foreign:products.id', quantity: 'unsignedInteger default:1', unit_price: 'decimal(10,2) default:0.00', total_units_price: 'decimal(10,2) default:0.00', notes: 'longtext nullable', relationships: { belongsTo: 'Order, Product' } }
