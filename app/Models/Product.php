@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProductType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -40,6 +41,7 @@ class Product extends Model
             'is_visible' => 'boolean',
             'is_featured' => 'boolean',
             'published_at' => 'datetime',
+            'type' => ProductType::class,
         ];
     }
 

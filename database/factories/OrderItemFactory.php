@@ -22,9 +22,9 @@ class OrderItemFactory extends Factory
             'order_id' => Order::factory(),
             'product_id' => Product::factory(),
             'quantity' => fake()->randomNumber(),
-            'unit_price' => fake()->word(),
-            'total_units_price' => fake()->word(),
-            'notes' => fake()->text(),
+            'unit_price' => fake()->randomFloat(2, 1, 100), // Random float between 1 and 100
+            'total_units_price' => $this->quantity * $this->unit_price,
+            'notes' => fake()->text(50),
         ];
     }
 }

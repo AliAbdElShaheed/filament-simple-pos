@@ -18,14 +18,14 @@ class BrandFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'slug' => fake()->unique()->slug(),
+            'slug' => Str::slug(fake()->unique()->name()),
             'url' => fake()->url(),
             'description' => fake()->text(),
             'logo' => null,
             'primary_hex_color' => fake()->hexColor(),
             'is_active' => fake()->boolean(),
             'is_visible' => fake()->boolean(),
-            'notes' => fake()->text(),
+            'notes' => null,
         ];
     }
 }

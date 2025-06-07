@@ -24,11 +24,11 @@ class CustomerFactory extends Factory
             'address' => fake()->address(),
             'address2' => fake()->address(),
             'date_of_birth' => fake()->dateTimeBetween('-40 years', '-20 years')->format('Y-m-d'),
-            'country' => fake()->country(),
+            'country' => 'Egypt',
             'state' => fake()->citySuffix(),
             'city' => fake()->city(),
             'postal_code' => fake()->postcode(),
-            'additional_info' => fake()->text(),
+            'additional_info' => null,
         ];
     }
 }

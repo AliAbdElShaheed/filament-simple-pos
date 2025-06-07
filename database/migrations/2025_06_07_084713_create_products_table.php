@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('brand_id')->nullable()->constrained('brands')->nullOnDelete();
             $table->string('sku')->unique();
             $table->longText('description')->nullable();
-            $table->string('price')->default('0.00');
+            $table->decimal('price', 10, 2)->default(0.00);
             $table->unsignedInteger('quantity')->default(0);
             $table->string('image')->nullable();
             $table->enum('type', ['deliverable', 'downloadable'])->default('deliverable');

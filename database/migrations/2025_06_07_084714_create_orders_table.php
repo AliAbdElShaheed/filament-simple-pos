@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('order_number')->unique();
             $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
-            $table->string('total_amount')->default('0.00');
+            $table->decimal('total_amount', 10, 2)->default(0.00);
             $table->string('status')->default('pending');
             $table->string('payment_status')->default('unpaid');
-            $table->string('shipping_price')->default('0.00');
+            $table->decimal('shipping_price', 10, 2)->default(0.00);
             $table->string('shipping_address')->nullable();
             $table->string('billing_address')->nullable();
             $table->dateTime('placed_at')->nullable();

@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'slug' => fake()->slug(),
+            'slug' => Str::slug(fake()->unique()->name()),
             'parent_id' => null,
             'description' => fake()->text(),
             'is_active' => fake()->boolean(),
