@@ -1,0 +1,2 @@
+    // Fillable properties for the model
+    protected $fillable = [];

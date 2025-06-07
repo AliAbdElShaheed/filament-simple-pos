@@ -1,0 +1,92 @@
+models:
+  Brand:
+    name: string
+    slug: string unique
+    url: string nullable
+    description: longtext nullable
+    logo: string nullable
+    primary_hex_color: string nullable
+    is_active: boolean default:true
+    is_visible: boolean default:false
+    notes: longtext nullable
+    relationships:
+      hasMany: Product
+
+  Category:
+    name: string
+    slug: string unique
+    parent_id: id foreign:categories.id nullable
+    description: longtext nullable
+    is_active: boolean default:true
+    is_visible: boolean default:false
+    relationships:
+      hasMany: Category:child
+      belongsTo: Category:parent
+      belongsToMany: Product
+
+  Product:
+    name: string
+    slug: string unique
+    brand_id: id foreign:brands.id nullable
+    sku: string unique
+    description: longtext nullable
+    price: decimal(10,2) default:0.00
+    quantity: unsignedInteger default:0
+    image: string nullable
+    type: enum('deliverable', 'downloadable') default:'deliverable'
+    is_active: boolean default:true
+    is_visible: boolean default:false
+    is_featured: boolean default:false
+    published_at: datetime nullable
+    relationships:
+      belongsTo: Brand
+      belongsToMany: Category
+
+  Customer:
+    name: string
+    email: string unique
+    phone: string
+    phone2: string nullable
+    address: string
+    address2: string nullable
+    date_of_birth: date nullable
+    country: string nullable
+    state: string nullable
+    city: string nullable
+    postal_code: string nullable
+    additional_info: longtext nullable
+    relationships:
+      hasMany: Order
+
+
+  Order:
+    order_number: string unique
+    customer_id: id foreign:customers.id nullable
+    total_amount: decimal(10,2) default:0.00
+    status: enum('pending', 'processing', 'completed', 'cancelled') default:'pending'
+    payment_status: enum('unpaid', 'paid', 'refunded') default:'unpaid'
+    shipping_price: decimal(10,2) default:0.00
+    shipping_address: string nullable
+    billing_address: string nullable
+    placed_at: datetime nullable
+    delivered_at: datetime nullable
+    cancelled_at: datetime nullable
+    notes: longtext nullable
+    softDeletes: true
+    relationships:
+      belongsTo: Customer
+      hasMany: OrderItem
+
+  OrderItem:
+    order_id: id foreign:orders.id
+    product_id: id foreign:products.id
+    quantity: unsignedInteger default:1
+    unit_price: decimal(10,2) default:0.00
+    total_units_price: decimal(10,2) default:0.00
+    notes: longtext nullable
+    relationships:
+      belongsTo: Order, Product
+
+
+
+

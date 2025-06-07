@@ -1,0 +1,2 @@
+    // hidden property for the model
+    protected $hidden = [];

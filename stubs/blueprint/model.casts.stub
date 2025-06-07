@@ -1,0 +1,6 @@
+
+    // Casts
+    protected function casts(): array
+    {
+        return [];
+    }
