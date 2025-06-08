@@ -30,7 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->registration()
             ->passwordReset()
             ->emailVerification()
-            ->brandName('Point of Sale')
+            //->brandName('Point of Sale')
             //->brandLogo(asset('images/logo.jpg'))
             //->darkModeBrandLogo(asset('images/logo-dark.png'))
 
@@ -40,9 +40,12 @@ class AdminPanelProvider extends PanelProvider
             ->collapsibleNavigationGroups()
 
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => '#4e74fc',
                 'gray' => Color::Slate,
             ])
+            ->font('Nunito')
+            ->favicon(asset('system/Alioo-favicon-indigo.png'))
+
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
