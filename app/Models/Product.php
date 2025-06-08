@@ -19,14 +19,22 @@ class Product extends Model
         'brand_id',
         'sku',
         'description',
-        'price',
         'quantity',
+        'price',
         'image',
         'type',
         'is_active',
         'is_visible',
         'is_featured',
         'published_at',
+    ];
+
+
+
+    protected $appends = [
+        'image_url',
+        'price_formatted',
+        'published_at_formatted',
     ];
 
 
@@ -45,6 +53,10 @@ class Product extends Model
         ];
     }
 
+
+
+
+    // Relationships
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
@@ -59,4 +71,23 @@ class Product extends Model
     {
         return $this->belongsToMany(OrderItem::class);
     }
+
+
+
+    // Accessors & Mutators
+    public function getImageUrlAttribute(): string
+    {
+        return $this->image ? asset('storage/products/' . $this->image) : asset('images/default-product.png');
+    }
+
+    public function getPriceFormattedAttribute(): string
+    {
+        return number_format($this->price, 2, '.', '');
+    }
+
+    public function getPublishedAtFormattedAttribute(): string
+    {
+        return $this->published_at ? $this->published_at->format('Y-m-d H:i:s') : '';
+    }
+
 } // end class Product

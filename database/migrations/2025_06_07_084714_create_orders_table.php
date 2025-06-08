@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
             $table->decimal('total_amount', 10, 2)->default(0.00);
             $table->string('status')->default('pending');
+            //$table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])->default('pending');
             $table->string('payment_status')->default('unpaid');
             $table->decimal('shipping_price', 10, 2)->default(0.00);
             $table->string('shipping_address')->nullable();

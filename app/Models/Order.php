@@ -47,6 +47,9 @@ class Order extends Model
         ];
     }
 
+
+
+    // Relationships
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
@@ -56,4 +59,7 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+
+
 } // end class Order

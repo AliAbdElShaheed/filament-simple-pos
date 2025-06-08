@@ -36,8 +36,14 @@ class Customer extends Model
         ];
     }
 
+
+
+    // Relationships
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
+
+
+
 } // end class Customer

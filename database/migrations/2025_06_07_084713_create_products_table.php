@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->foreignId('brand_id')->nullable()->constrained('brands')->nullOnDelete();
+            $table->foreignId('brand_id')->constrained('brands')->cascadeOnDelete();
             $table->string('sku')->unique();
             $table->longText('description')->nullable();
-            $table->decimal('price', 10, 2)->default(0.00);
             $table->unsignedInteger('quantity')->default(0);
+            $table->decimal('price', 10, 2)->default(0.00);
             $table->string('image')->nullable();
             $table->enum('type', ['deliverable', 'downloadable'])->default('deliverable');
             $table->boolean('is_active')->default(true);

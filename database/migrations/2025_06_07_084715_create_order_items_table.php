@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->unsignedInteger('quantity')->default(1);
-            $table->string('unit_price')->default('0.00');
-            $table->string('total_units_price')->default('0.00');
+            $table->decimal('unit_price', 10, 2)->default(0.00);
+            $table->decimal('total_units_price', 10, 2)->default(0.00);
             $table->longText('notes')->nullable();
             $table->timestamps();
         });

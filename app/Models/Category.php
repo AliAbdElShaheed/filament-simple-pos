@@ -16,10 +16,12 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
+        'image',
         'parent_id',
         'description',
         'is_active',
         'is_visible',
+        'notes',
     ];
 
 
@@ -34,6 +36,8 @@ class Category extends Model
         ];
     }
 
+
+    // Relationships
     public function children(): HasMany
     {
         return $this->hasMany(Category::class);
@@ -48,4 +52,6 @@ class Category extends Model
     {
         return $this->belongsToMany(Product::class);
     }
+
+
 } // end class Category

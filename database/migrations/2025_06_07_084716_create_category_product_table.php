@@ -12,8 +12,12 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('category_product', function (Blueprint $table) {
-            $table->foreignId('category_id');
-            $table->foreignId('product_id');
+            $table->foreignId('category_id')
+                ->constrained('categories')
+                ->cascadeOnDelete();
+            $table->foreignId('product_id')
+                ->constrained('products')
+                ->cascadeOnDelete();
         });
 
         Schema::enableForeignKeyConstraints();

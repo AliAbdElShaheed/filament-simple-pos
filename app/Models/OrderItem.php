@@ -29,9 +29,14 @@ class OrderItem extends Model
             'order_id' => 'integer',
             'product_id' => 'integer',
             'quantity' => 'integer',
+            'unit_price' => 'decimal:2',
+            'total_units_price' => 'decimal:2',
         ];
     }
 
+
+
+    // Relationships
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
@@ -41,4 +46,8 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+
+
+
 } // end class OrderItem
