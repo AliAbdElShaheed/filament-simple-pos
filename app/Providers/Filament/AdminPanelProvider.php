@@ -27,8 +27,21 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->registration()
+            ->passwordReset()
+            ->emailVerification()
+            ->brandName('Point of Sale')
+            //->brandLogo(asset('images/logo.jpg'))
+            //->darkModeBrandLogo(asset('images/logo-dark.png'))
+
+            ->sidebarCollapsibleOnDesktop()
+            //->sidebarFullyCollapsibleOnDesktop()
+
+            ->collapsibleNavigationGroups()
+
             ->colors([
                 'primary' => Color::Amber,
+                'gray' => Color::Slate,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
