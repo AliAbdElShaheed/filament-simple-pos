@@ -18,16 +18,26 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $purchasePrice = fake()->randomFloat(2, 0, 100);
+        $salePrice = fake()->randomFloat(2, 100, 200);
+        $productProfit = $salePrice - $purchasePrice;
+
         return [
             'name' => fake()->name(),
             'slug' => Str::slug(fake()->unique()->name()),
             'brand_id' => Brand::factory(),
             'sku' => fake()->unique()->word(),
+            'bar_code' => fake()->unique()->ean13(), // Generate a unique EAN-13 barcode
             'description' => fake()->text(),
-            'price' => fake()->randomFloat(2, 1, 1000), // Random price between 1 and 1000
-            'quantity' => fake()->numberBetween(1, 100),
             'image' => null,
             'type' => $this->faker->randomElement(ProductType::class),
+            'purchase_price' => $purchasePrice,
+            'sale_price' => $salePrice,
+            'product_profit' => $productProfit,
+
+            'quantity' => fake()->numberBetween(10, 100),
+            'minimum_quantity' => fake()->numberBetween(0, 10),
+
             'is_active' => fake()->boolean(),
             'is_visible' => fake()->boolean(),
             'is_featured' => fake()->boolean(),

@@ -18,11 +18,19 @@ class Product extends Model
         'slug',
         'brand_id',
         'sku',
+        'bar_code',
         'description',
-        'quantity',
-        'price',
         'image',
         'type',
+        //'unit_type',
+
+        'purchase_price',
+        'sale_price',
+        'product_profit',
+
+        'quantity',
+        'minimum_quantity',
+
         'is_active',
         'is_visible',
         'is_featured',
@@ -34,6 +42,7 @@ class Product extends Model
     protected $appends = [
         'image_url',
         'price_formatted',
+        'purchase_price_formatted',
         'published_at_formatted',
     ];
 
@@ -44,7 +53,13 @@ class Product extends Model
         return [
             'id' => 'integer',
             'brand_id' => 'integer',
+
+            'sale_price' => 'decimal:3',
+            'purchase_price' => 'decimal:3',
+            'product_profit' => 'decimal:3',
+
             'quantity' => 'integer',
+            'minimum_quantity' => 'integer',
             'is_active' => 'boolean',
             'is_visible' => 'boolean',
             'is_featured' => 'boolean',
@@ -82,8 +97,15 @@ class Product extends Model
 
     public function getPriceFormattedAttribute(): string
     {
-        return number_format($this->price, 2, '.', '');
+        return number_format($this->sale_price, 3, '.', ',');
     }
+
+    public function getPurchasePriceFormattedAttribute(): string
+    {
+        return number_format($this->purchase_price, 3, '.', ',');
+    }
+
+
 
     public function getPublishedAtFormattedAttribute(): string
     {
