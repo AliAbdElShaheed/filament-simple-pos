@@ -22,26 +22,7 @@ class CategoryResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
-                Forms\Components\Select::make('parent_id')
-                    ->relationship('parent', 'name'),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
-                Forms\Components\Toggle::make('is_active')
-                    ->required(),
-                Forms\Components\Toggle::make('is_visible')
-                    ->required(),
-                Forms\Components\Textarea::make('notes')
-                    ->columnSpanFull(),
-            ]);
+            ->schema(Category::getFormSchema());
     }
 
     public static function table(Table $table): Table

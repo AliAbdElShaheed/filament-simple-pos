@@ -22,38 +22,7 @@ class CustomerResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone')
-                    ->tel()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone2')
-                    ->tel()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('address')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('address2')
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('date_of_birth'),
-                Forms\Components\TextInput::make('country')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('state')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('city')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('postal_code')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('additional_info')
-                    ->columnSpanFull(),
-            ]);
+            ->schema(Customer::getFormSchema());
     }
 
     public static function table(Table $table): Table

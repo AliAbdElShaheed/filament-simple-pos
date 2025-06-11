@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,4 +48,25 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-}
+
+    // Functions
+    public static function getFormSchema(): array
+    {
+        return [
+            TextInput::make('name')
+                ->required()
+                ->maxLength(255),
+            TextInput::make('email')
+                ->email()
+                ->required()
+                ->maxLength(255),
+            DateTimePicker::make('email_verified_at'),
+            TextInput::make('password')
+                ->password()
+                ->required()
+                ->maxLength(255),
+            Toggle::make('is_admin')
+                ->required(),
+        ];
+    }
+} // end class User

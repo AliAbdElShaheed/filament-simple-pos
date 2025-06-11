@@ -3,6 +3,12 @@
 namespace App\Models;
 
 use App\Enums\ProductType;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -112,4 +118,61 @@ class Product extends Model
         return $this->published_at ? $this->published_at->format('Y-m-d H:i:s') : '';
     }
 
+
+
+
+    // Functions
+    public static function getFormSchema(): array
+    {
+        return [
+            TextInput::make('name')
+                ->required()
+                ->maxLength(255),
+            TextInput::make('slug')
+                ->required()
+                ->maxLength(255),
+            Select::make('brand_id')
+                ->relationship('brand', 'name')
+                ->required(),
+            TextInput::make('sku')
+                ->label('SKU')
+                ->required()
+                ->maxLength(255),
+            TextInput::make('bar_code')
+                ->maxLength(255),
+            Textarea::make('description')
+                ->columnSpanFull(),
+            FileUpload::make('image')
+                ->image(),
+            TextInput::make('type')
+                ->required(),
+            TextInput::make('purchase_price')
+                ->required()
+                ->numeric()
+                ->default(0.000),
+            TextInput::make('sale_price')
+                ->required()
+                ->numeric()
+                ->default(10.000),
+            TextInput::make('product_profit')
+                ->required()
+                ->numeric()
+                ->default(10.000),
+            TextInput::make('quantity')
+                ->required()
+                ->numeric()
+                ->default(0),
+            TextInput::make('minimum_quantity')
+                ->required()
+                ->numeric()
+                ->default(0),
+            Toggle::make('is_active')
+                ->required(),
+            Toggle::make('is_visible')
+                ->required(),
+            Toggle::make('is_featured')
+                ->required(),
+            DateTimePicker::make('published_at'),
+        ];
+    }
 } // end class Product

@@ -22,39 +22,7 @@ class OrderResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('order_number')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('customer_id')
-                    ->relationship('customer', 'name')
-                    ->required(),
-                Forms\Components\TextInput::make('total_amount')
-                    ->required()
-                    ->numeric()
-                    ->default(0.00),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->maxLength(255)
-                    ->default('pending'),
-                Forms\Components\TextInput::make('payment_status')
-                    ->required()
-                    ->maxLength(255)
-                    ->default('unpaid'),
-                Forms\Components\TextInput::make('shipping_price')
-                    ->required()
-                    ->numeric()
-                    ->default(0.00),
-                Forms\Components\TextInput::make('shipping_address')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('billing_address')
-                    ->maxLength(255),
-                Forms\Components\DateTimePicker::make('placed_at'),
-                Forms\Components\DateTimePicker::make('delivered_at'),
-                Forms\Components\DateTimePicker::make('cancelled_at'),
-                Forms\Components\Textarea::make('notes')
-                    ->columnSpanFull(),
-            ]);
+            ->schema(Order::getFormSchema());
     }
 
     public static function table(Table $table): Table

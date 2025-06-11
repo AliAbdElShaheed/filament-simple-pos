@@ -4,6 +4,10 @@ namespace App\Models;
 
 use App\Enums\OrderPaymentStatus;
 use App\Enums\OrderStatus;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -62,4 +66,41 @@ class Order extends Model
 
 
 
+    // Functions
+    public static function getFormSchema(): array
+    {
+        return [
+            TextInput::make('order_number')
+                ->required()
+                ->maxLength(255),
+            Select::make('customer_id')
+                ->relationship('customer', 'name')
+                ->required(),
+            TextInput::make('total_amount')
+                ->required()
+                ->numeric()
+                ->default(0.00),
+            TextInput::make('status')
+                ->required()
+                ->maxLength(255)
+                ->default('pending'),
+            TextInput::make('payment_status')
+                ->required()
+                ->maxLength(255)
+                ->default('unpaid'),
+            TextInput::make('shipping_price')
+                ->required()
+                ->numeric()
+                ->default(0.00),
+            TextInput::make('shipping_address')
+                ->maxLength(255),
+            TextInput::make('billing_address')
+                ->maxLength(255),
+            DateTimePicker::make('placed_at'),
+            DateTimePicker::make('delivered_at'),
+            DateTimePicker::make('cancelled_at'),
+            Textarea::make('notes')
+                ->columnSpanFull(),
+        ];
+    }
 } // end class Order
