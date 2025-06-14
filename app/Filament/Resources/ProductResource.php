@@ -35,19 +35,27 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('image'),
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('slug')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('brand.name')
-                    ->numeric()
                     ->sortable(),
                 TextColumn::make('sku')
                     ->label('SKU')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('bar_code')
-                    ->searchable(),
-                ImageColumn::make('image'),
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('description')
+                    ->limit(35)
+                    ->html()
+                    ->markdown()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('type'),
                 TextColumn::make('purchase_price')
                     ->numeric()
@@ -65,11 +73,14 @@ class ProductResource extends Resource
                     ->numeric()
                     ->sortable(),
                 IconColumn::make('is_active')
-                    ->boolean(),
+                    ->boolean()
+                    ->sortable(),
                 IconColumn::make('is_visible')
-                    ->boolean(),
+                    ->boolean()
+                    ->sortable(),
                 IconColumn::make('is_featured')
-                    ->boolean(),
+                    ->boolean()
+                    ->sortable(),
                 TextColumn::make('published_at')
                     ->dateTime()
                     ->sortable(),
