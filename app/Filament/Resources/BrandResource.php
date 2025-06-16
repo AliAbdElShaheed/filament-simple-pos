@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BrandResource\Pages;
 use App\Filament\Resources\BrandResource\RelationManagers;
 use App\Models\Brand;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -19,6 +18,10 @@ class BrandResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Shop';
+
+    protected static ?int $navigationSort = 3;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -30,35 +33,66 @@ class BrandResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('url')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('logo')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('primary_hex_color')
-                    ->searchable(),
+                    ->label('Website URL')
+                    ->url(fn(Brand $record): string => $record->url)
+                    ->openUrlInNewTab()
+                    ->limit(50)
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(),
+
+                Tables\Columns\ImageColumn::make('logo')
+                    ->circular()
+                    ->toggleable()
+                    ->size(50),
+
+                Tables\Columns\TextColumn::make('description')
+                    ->limit(35)
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\ColorColumn::make('primary_hex_color')
+                    ->label('Primary Color'),
+
                 Tables\Columns\IconColumn::make('is_active')
-                    ->boolean(),
+                    ->label('Active')
+                    ->boolean()
+                    ->sortable(),
+
                 Tables\Columns\IconColumn::make('is_visible')
-                    ->boolean(),
+                    ->label('Visibility')
+                    ->boolean()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
             ])
+            //], position: Tables\Enums\ActionPosition::Footer)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
