@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -35,7 +37,10 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->circular()
+                    //->size(50)
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
@@ -105,7 +110,32 @@ class ProductResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                TernaryFilter::make('is_active')
+                    ->label('Is Active')
+                    ->placeholder('All')
+                    ->trueLabel('Active Products')
+                    ->falseLabel('Inactive Products')
+                    ->native(false),
+
+                TernaryFilter::make('is_visible')
+                    ->label('Visibility')
+                    ->placeholder('All')
+                    ->trueLabel('Visible Products')
+                    ->falseLabel('Hidden Products'),
+
+                TernaryFilter::make('is_featured')
+                    ->label('Featured')
+                    ->placeholder('All')
+                    ->trueLabel('Featured Products')
+                    ->falseLabel('Non-Featured Products')
+                    ->Native(false),
+
+                SelectFilter::make('brand')
+                    ->relationship('brand', 'name')
+                    ->label('Brand')
+                    ->searchable()
+                    ->preload()
+                    ->native(false),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
