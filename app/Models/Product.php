@@ -92,7 +92,7 @@ class Product extends Model
                         ->schema([
                             TextInput::make('name')
                                 ->required()
-                                ->unique()
+                                ->unique(Product::class, 'name', ignoreRecord: true)
                                 ->live(onBlur: true)
                                 ->maxLength(255)
                                 ->afterStateUpdated(function (string $operation, $state, $set) {
@@ -262,7 +262,7 @@ class Product extends Model
     {
         return number_format($this->purchase_price, 3, '.', ',');
     }
-    
+
     public function getPublishedAtFormattedAttribute(): string
     {
         return $this->published_at ? $this->published_at->format('Y-m-d H:i:s') : '';
