@@ -41,48 +41,59 @@ class ProductResource extends Resource
                     ->sortable(),
                 TextColumn::make('slug')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('brand.name')
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('sku')
                     ->label('SKU')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('bar_code')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('description')
                     ->limit(35)
                     ->html()
                     ->markdown()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('type'),
+                TextColumn::make('type')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('purchase_price')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('sale_price')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('product_profit')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('quantity')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('minimum_quantity')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 IconColumn::make('is_active')
+                    ->label('Activation')
                     ->boolean()
                     ->sortable(),
                 IconColumn::make('is_visible')
+                    ->label('Visibility')
                     ->boolean()
                     ->sortable(),
                 IconColumn::make('is_featured')
+                    ->label('Featured')
                     ->boolean()
                     ->sortable(),
                 TextColumn::make('published_at')
-                    ->dateTime()
+                    ->date()
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
