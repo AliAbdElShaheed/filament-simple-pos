@@ -23,11 +23,11 @@ class ProductFactory extends Factory
         $productProfit = $salePrice - $purchasePrice;
 
         return [
-            'name' => fake()->name(),
-            'slug' => Str::slug(fake()->unique()->name()),
+            'name' => $name = fake()->unique()->word(),
+            'slug' => Str::slug($name),
             'brand_id' => Brand::factory(),
             'sku' => fake()->unique()->word(),
-            'bar_code' => fake()->unique()->ean13(), // Generate a unique EAN-13 barcode
+            'bar_code' => fake()->ean13(),
             'description' => fake()->text(),
             'image' => null,
             'type' => $this->faker->randomElement(ProductType::class),

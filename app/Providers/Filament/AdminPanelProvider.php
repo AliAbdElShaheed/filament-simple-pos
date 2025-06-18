@@ -38,14 +38,13 @@ class AdminPanelProvider extends PanelProvider
             //->sidebarFullyCollapsibleOnDesktop()
 
             ->collapsibleNavigationGroups()
-
+            ->globalSearchKeyBindings(['ctrl+k', 'mod+k', 'command+k'])
             ->colors([
                 'primary' => '#4e74fc',
                 'gray' => Color::Slate,
             ])
             ->font('Nunito')
             ->favicon(asset('system/Alioo-favicon-indigo.png'))
-
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
