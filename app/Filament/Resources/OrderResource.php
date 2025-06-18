@@ -17,7 +17,11 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
+
+    protected static ?string $navigationGroup = 'Shop';
+
+    protected static ?int $navigationSort = 7;
 
     public static function form(Form $form): Form
     {
@@ -30,33 +34,52 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('order_number')
+                    ->sortable()
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('customer.name')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('status')
+                    ->sortable()
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('total_amount')
                     ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
+                    ->sortable()
+                    ->searchable()
+                    ->summarize([
+                        Tables\Columns\Summarizers\Sum::make()
+                            ->money()
+                    ]),
+
                 Tables\Columns\TextColumn::make('payment_status')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('shipping_price')
                     ->numeric()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('shipping_address')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('billing_address')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('placed_at')
                     ->dateTime()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('delivered_at')
                     ->dateTime()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('cancelled_at')
                     ->dateTime()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -74,8 +97,13 @@ class OrderResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\ForceDeleteAction::make(),
+                    Tables\Actions\RestoreAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
